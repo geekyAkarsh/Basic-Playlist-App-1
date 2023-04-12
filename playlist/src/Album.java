@@ -1,3 +1,4 @@
+import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +42,7 @@ public class Album {
         return "Song successfully added in the album";
     }
 
-    private Optional<Song> findSong(String title){
+    public Optional<Song> findSong(String title){
 
         for(Song currSong : songs){
             if(title.equals(currSong.getTitle()))
@@ -50,7 +51,15 @@ public class Album {
         return Optional.empty();
     }
 
-    private Optional<Song> findSong(String title,String artist){
+    public Optional<Song> findSong(int trackNo){
+
+        if(trackNo>0 && trackNo<=songs.size())
+            return Optional.of(songs.get(trackNo));
+
+        return Optional.empty();
+    }
+
+    public Optional<Song> findSong(String title,String artist){
 
         for(Song currSong : songs){
             if(title.equals(currSong.getTitle()) && artist.equals(currSong.getArtist()))
@@ -59,7 +68,7 @@ public class Album {
         return Optional.empty();
     }
 
-    private boolean findSong(Song song) {
+    public boolean findSong(Song song) {
 
         for(Song currSong : songs){
             if(currSong.getTitle().equals(song.getTitle()) &&
