@@ -53,7 +53,7 @@ public class Album {
 
     public Optional<Song> findSong(int trackNo){
 
-        if(trackNo>0 && trackNo<=songs.size())
+        if(trackNo>=0 && trackNo<songs.size())
             return Optional.of(songs.get(trackNo));
 
         return Optional.empty();

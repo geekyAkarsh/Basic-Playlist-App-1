@@ -16,6 +16,10 @@ public class Playlist {
         itr = songs.listIterator();
     }
 
+    public int playlistSize(){
+        return this.songs.size();
+    }
+
     public String addSongFromAlbum(Album album,String songTitle){
 
         Optional<Song> optionalSongInPlaylist = findSong(songTitle);
@@ -26,6 +30,7 @@ public class Playlist {
         Optional<Song> optionalSongInAlbum = album.findSong(songTitle);
         if(optionalSongInAlbum.isPresent()){
             songs.add(optionalSongInAlbum.get());
+            itr = songs.listIterator();
             return "Song added to Playlist !!!";
         }else{
             return "Song not found in Album :(";
@@ -44,23 +49,23 @@ public class Playlist {
 
     public String addSongFromAlbum(Album album,int trackNo){
 
-        Optional<Song> optionalSongInPlaylist = findSong(trackNo);
+        Optional<Song> optionalSongInAlbum = album.findSong(trackNo);
+        if(optionalSongInAlbum.isEmpty())
+            return "Song not found in Album :(";
+
+        Optional<Song> optionalSongInPlaylist = findSong(optionalSongInAlbum.get().getTitle());
         if(optionalSongInPlaylist.isPresent()){
             return "Song already present in the Playlist";
         }
 
-        Optional<Song> optionalSongInAlbum = album.findSong(trackNo);
-        if(optionalSongInAlbum.isPresent()){
             songs.add(optionalSongInAlbum.get());
+            itr = songs.listIterator();
             return "Song added to Playlist !!!";
-        }else{
-            return "Song not found in Album :(";
-        }
     }
 
     public Optional<Song> findSong(int trackNo){
 
-        if(trackNo>0 && trackNo<=songs.size())
+        if(trackNo>=0 && trackNo<songs.size())
             return Optional.of(songs.get(trackNo));
 
         return Optional.empty();
